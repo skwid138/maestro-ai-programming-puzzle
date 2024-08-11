@@ -1,0 +1,24 @@
+{
+  "name": "@skwid138/maestro-ai-programming-puzzle",
+  "version": "1.0.0",
+  "description": "Maestro AI Programming Puzzle",
+  "author": {
+    "name": "Hunter Rancourt",
+    "email": "hunter.rancourt@gmail.com"
+  },
+  "main": "dfs.js",
+  "scripts": {
+    "start:dfs": "node dfs.js",
+    "start:bfs": "node bfs.js",
+    "start:union-find": "node unionFind.js",
+    "start:flood-fill": "node floodFill.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/skwid138/maestro-ai-programming-puzzle"
+  },
+  "keywords": [],
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {}
+}
