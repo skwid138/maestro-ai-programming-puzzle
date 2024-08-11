@@ -2,7 +2,8 @@ FROM node:lts
 
 WORKDIR /app
 
-COPY . .
+COPY docker-algorithms/ .
+COPY data/ .
 
 # By default, run the DFS script
-CMD ["npm", "run", "start:dfs"]
+CMD ["node", "dfs.js"]
