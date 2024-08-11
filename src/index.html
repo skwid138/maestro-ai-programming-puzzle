@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Algorithm Visualization</title>
+</head>
+
+<body>
+  <h1>Algorithm Visualization</h1>
+
+  <div id="controls">
+    <label for="algorithm">Choose an algorithm:</label>
+    <select id="algorithm">
+      <option value="dfs">Depth-First Search (DFS)</option>
+      <option value="bfs">Breadth-First Search (BFS)</option>
+      <option value="union-find">Union-Find</option>
+      <option value="flood-fill">Flood Fill</option>
+    </select>
+
+    <label for="fileInput">Upload a file:</label>
+    <input type="file" id="fileInput" accept=".txt">
+
+    <label for="dataFiles">Or choose a file from the data directory:</label>
+    <select id="dataFiles">
+      <option value="">-- Select a file --</option>
+      <!-- Dynamically populated options will go here -->
+    </select>
+
+    <button id="runButton">Run Visualization</button>
+  </div>
+
+  <div id="canvasContainer"></div>
+
+  <script src="bundle.js"></script>
+</body>
+
+</html>
