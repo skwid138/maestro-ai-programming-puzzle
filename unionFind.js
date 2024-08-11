@@ -1,40 +1,11 @@
-const fs = require('fs');
+const { readGrid, measurePerformance } = require('./utils');
 
-const filePath = process.argv[2];
-
-if (!filePath) {
-  console.error('Please provide the path to the grid text file as an argument.');
-  process.exit(1);
-}
-
-fs.readFile(filePath, 'utf8', (err, data) => {
-  if (err) {
-    console.error('Error reading file:', err);
-    return;
-  }
-
-  const grid = data.trim().split('\n').map(line => line.split('').map(Number));
-
-  const startTime = process.hrtime();
-  const initialMemory = process.memoryUsage().heapUsed;
-
-  const shapeCount = countConnectedShapesUnionFind(grid);
-
-  const endTime = process.hrtime(startTime);
-  const finalMemory = process.memoryUsage().heapUsed;
-
-  console.log(`Number of connected shapes (Union-Find): ${shapeCount}`);
-  console.log(`Execution time (Union-Find): ${endTime[0]}s ${endTime[1] / 1000000}ms`);
-  console.log(`Memory used (Union-Find): ${(finalMemory - initialMemory) / 1024} KB`);
-});
-
+// Union-Find (Disjoint Set Union) implementation
 function countConnectedShapesUnionFind(grid) {
-  if (!grid || grid.length === 0) return 0;
-
   const rows = grid.length;
   const cols = grid[0].length;
-  const parent = Array(rows * cols).fill(-1);
-  const rank = Array(rows * cols).fill(0);
+  const parent = Array(rows * cols).fill(-1); // Array to store the parent of each cell
+  const rank = Array(rows * cols).fill(0); // Array to store the rank (depth) of each tree
 
   const find = (i) => {
     if (parent[i] === -1) return i;
@@ -59,7 +30,6 @@ function countConnectedShapesUnionFind(grid) {
 
   const index = (r, c) => r * cols + c;
 
-  // Step 1: Apply union-find to connect the components
   for (let r = 0; r < rows; r++) {
     for (let c = 0; c < cols; c++) {
       if (grid[r][c] === 1) {
@@ -69,7 +39,6 @@ function countConnectedShapesUnionFind(grid) {
     }
   }
 
-  // Step 2: Count the distinct roots to determine the number of connected components
   const rootSet = new Set();
   for (let r = 0; r < rows; r++) {
     for (let c = 0; c < cols; c++) {
@@ -81,3 +50,8 @@ function countConnectedShapesUnionFind(grid) {
 
   return rootSet.size;
 }
+
+// Read the grid and measure performance of the Union-Find algorithm
+readGrid(process.argv[2], (grid) => {
+  measurePerformance(grid, 'Union-Find', countConnectedShapesUnionFind);
+});
