@@ -10,12 +10,9 @@ import { initializeGrid, resetState } from './utils/gridUtils';
 let grid = [];
 let algorithm = 'dfs';
 let state = resetState();
-let p5Instance;
 
-// Set up the p5.js sketch
-new p5((sketch) => {
-    p5Instance = sketch;
-
+// Create the p5 instance
+const p5Instance = new p5((sketch) => {
     sketch.setup = function () {
         const canvas = sketch.createCanvas(800, 600);
         canvas.parent('canvasContainer');
@@ -23,7 +20,9 @@ new p5((sketch) => {
     };
 
     sketch.draw = function () {
-        sketch.background(255);
+        console.log('Drawing grid...');
+        sketch.clear();  // Clear the canvas before drawing
+        sketch.background(255);  // Set the background to white
         drawGrid(sketch);
         if (!state.completed) {
             runAlgorithm(sketch);
@@ -65,15 +64,42 @@ new p5((sketch) => {
                 break;
         }
     }
-
 });
 
-// Handle algorithm selection and file input as before
+// Function to reset the animation
+function resetAnimation() {
+    // Reset the grid and state
+    grid = [];
+    state = resetState();
+
+    // Clear the p5 canvas
+    p5Instance.clear();
+    p5Instance.noLoop(); // Stop the drawing loop
+    p5Instance.background(255); // Set the background to white
+}
+
+// Populate the data files dropdown on page load
 document.addEventListener('DOMContentLoaded', () => {
     const dataFilesSelect = document.getElementById('dataFiles');
     fetchDataFiles(dataFilesSelect);
 });
 
+// Handle file input change (for both file upload and dropdown selection)
+document.getElementById('fileInput').addEventListener('change', () => {
+    resetAnimation(); // Reset animation
+});
+
+document.getElementById('dataFiles').addEventListener('change', () => {
+    resetAnimation(); // Reset animation
+});
+
+// Handle algorithm selection change
+document.getElementById('algorithm').addEventListener('change', () => {
+    algorithm = document.getElementById('algorithm').value;
+    resetAnimation(); // Reset animation
+});
+
+// Run the visualization on button click
 document.getElementById('runButton').addEventListener('click', () => {
     const fileInput = document.getElementById('fileInput');
     const dataFilesSelect = document.getElementById('dataFiles');
@@ -91,9 +117,5 @@ document.getElementById('runButton').addEventListener('click', () => {
 function processFileContent(content) {
     grid = initializeGrid(content);
     state = resetState();
-    if (p5Instance) {
-        p5Instance.redraw();
-    } else {
-        console.error('p5 instance is not initialized.');
-    }
+    p5Instance.redraw();
 }
