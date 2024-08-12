@@ -4,7 +4,6 @@ import { fetchDataFiles, loadDataFile, readUploadedFile } from './utils/dataUtil
 import { runDFS } from './algorithms/dfs';
 import { runBFS } from './algorithms/bfs';
 import { runUnionFind } from './algorithms/unionFind';
-import { runFloodFill } from './algorithms/floodFill';
 import { initializeGrid, resetState } from './utils/gridUtils';
 
 let grid = [];
@@ -59,9 +58,6 @@ const p5Instance = new p5((sketch) => {
                 break;
             case 'union-find':
                 runUnionFind(grid, state);
-                break;
-            case 'flood-fill':
-                runFloodFill(grid, state);
                 break;
         }
 
