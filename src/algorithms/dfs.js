@@ -29,16 +29,22 @@ export function runDFS(grid, state) {
             state.stack.push({ row: r, col: c });
             // Increment shapeCount when a new shape is found
             state.shapeCount++;
-            foundShape = true;  // Indicate that we found a new shape
+            // Indicate that we found a new shape, exit the column loop
+            foundShape = true;
             break;
           }
         }
-        // Exit the loop if the first cell of a shape was found
+        // Exit the row loop if the first cell of a shape was found
         if (foundShape) break;
       }
 
-      // If no new shape was found, exit the loop
-      if (!foundShape) break;
+      // If no new shape was found
+      if (!foundShape) {
+        // Mark the algorithm as completed
+        state.completed = true;
+        // Exit the outer while loop
+        break;
+      }
     }
 
     debugLogs && console.log('Pre stack loop state.stack -> ', state.stack);
@@ -73,7 +79,4 @@ export function runDFS(grid, state) {
 
   debugLogs && console.log('Final grid:', JSON.stringify(grid));
   debugLogs && console.log('Final shape count:', state.shapeCount);
-
-  // Mark the algorithm as completed
-  state.completed = true;
 }
