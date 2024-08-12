@@ -1,4 +1,4 @@
-const debugLogs = true;
+const debugLogs = false;
 /**
  * Union Find (also known as Disjoint-Set)
  * 
