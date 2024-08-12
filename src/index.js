@@ -8,19 +8,19 @@ import { runFloodFill } from './algorithms/floodFill';
 import { initializeGrid, resetState } from './utils/gridUtils';
 
 let grid = [];
-let algorithm = 'dfs';
+let algorithm = 'dfs'; // Default to DFS algorithm
 let state = resetState();
 
 const p5Instance = new p5((sketch) => {
     sketch.setup = function () {
         const canvas = sketch.createCanvas(800, 600);
         canvas.parent('canvasContainer');
-        sketch.noLoop();  // Prevent draw from looping automatically
+        sketch.noLoop(); // Prevent draw from looping automatically
     };
 
     sketch.draw = function () {
-        sketch.clear();  // Clear the canvas before drawing
-        sketch.background(255);  // Set the background to white
+        sketch.clear(); // Clear the canvas before drawing
+        sketch.background(255); // Set the background to white
         drawGrid(sketch);
         if (!state.completed) {
             runAlgorithm();
@@ -47,7 +47,7 @@ const p5Instance = new p5((sketch) => {
     }
 
     function runAlgorithm() {
-        state.shapeCount = 0;  // Reset shape count
+        state.shapeCount = 0; // Reset shape count
 
         // Run the selected algorithm
         switch (algorithm) {
@@ -73,6 +73,11 @@ const p5Instance = new p5((sketch) => {
 document.addEventListener('DOMContentLoaded', () => {
     const dataFilesSelect = document.getElementById('dataFiles');
     fetchDataFiles(dataFilesSelect);
+
+    // Event listener to update the algorithm when the user selects a different one
+    document.getElementById('algorithm').addEventListener('change', (event) => {
+        algorithm = event.target.value;  // Update the selected algorithm
+    });
 });
 
 document.getElementById('runButton').addEventListener('click', () => {
