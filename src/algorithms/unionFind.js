@@ -1,4 +1,5 @@
-const debugLogs = false;
+const debugLogs = true;
+
 /**
  * Union Find (also known as Disjoint-Set)
  * 
@@ -10,6 +11,7 @@ const debugLogs = false;
  */
 export function runUnionFind(grid, state) {
   debugLogs && console.log('in runUnionFind');
+
   // If the algorithm hasn't been initialized, initialize it
   if (!state.initialized) {
     initializeUnionFind(grid, state);
@@ -23,9 +25,16 @@ export function runUnionFind(grid, state) {
 
     // Update the grid to mark the cell as visited
     grid[step.row][step.col] = 0;  // Mark the cell as visited
+
+    // Update the current cell being processed
+    state.currentCell = { row: step.row, col: step.col };
+
+    // Trigger the next iteration
+    requestAnimationFrame(() => runUnionFind(grid, state));
   } else {
     // If no more steps are left, mark the algorithm as completed
     state.completed = true;
+    debugLogs && console.log('Final shape count:', state.shapeCount);
   }
 }
 

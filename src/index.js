@@ -21,9 +21,6 @@ const p5Instance = new p5((sketch) => {
         sketch.clear(); // Clear the canvas before drawing
         sketch.background(255); // Set the background to white
         drawGrid(sketch);
-        if (!state.completed) {
-            runAlgorithm();
-        }
     };
 
     function drawGrid(sketch) {
@@ -44,27 +41,40 @@ const p5Instance = new p5((sketch) => {
             sketch.rect(state.currentCell.col * cellWidth, state.currentCell.row * cellHeight, cellWidth, cellHeight);
         }
     }
-
-    function runAlgorithm() {
-        state.shapeCount = 0; // Reset shape count
-
-        // Run the selected algorithm
-        switch (algorithm) {
-            case 'dfs':
-                runDFS(grid, state);
-                break;
-            case 'bfs':
-                runBFS(grid, state);
-                break;
-            case 'union-find':
-                runUnionFind(grid, state);
-                break;
-        }
-
-        // Update the shape count in the UI
-        document.getElementById('shapeCount').textContent = state.shapeCount;
-    }
 });
+
+function executeAlgorithm() {
+    // Run the selected algorithm
+    switch (algorithm) {
+        case 'dfs':
+            runDFS(grid, state);
+            break;
+        case 'bfs':
+            runBFS(grid, state);
+            break;
+        case 'union-find':
+            runUnionFind(grid, state);
+            break;
+    }
+
+    // Update the shape count in the UI
+    document.getElementById('shapeCount').textContent = state.shapeCount;
+
+    // If the algorithm is not yet completed, continue the animation loop
+    if (!state.completed) {
+        p5Instance.redraw(); // Redraw the sketch
+        requestAnimationFrame(executeAlgorithm);
+    } else {
+        console.log('Algorithm completed');
+    }
+}
+
+function runAlgorithm() {
+    state.shapeCount = 0;
+
+    // Start the algorithm execution
+    requestAnimationFrame(executeAlgorithm);
+}
 
 document.addEventListener('DOMContentLoaded', () => {
     const dataFilesSelect = document.getElementById('dataFiles');
@@ -73,6 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Event listener to update the algorithm when the user selects a different one
     document.getElementById('algorithm').addEventListener('change', (event) => {
         algorithm = event.target.value;  // Update the selected algorithm
+        console.log('Algorithm changed to:', algorithm);
     });
 });
 
@@ -93,5 +104,8 @@ document.getElementById('runButton').addEventListener('click', () => {
 function processFileContent(content) {
     grid = initializeGrid(content);
     state = resetState();
-    p5Instance.redraw();
+    console.log('Starting new visualization with algorithm:', algorithm);
+
+    // Trigger the algorithm to start running
+    runAlgorithm();
 }
