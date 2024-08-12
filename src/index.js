@@ -9,6 +9,8 @@ import { initializeGrid, resetState } from './utils/gridUtils';
 let grid = [];
 let algorithm = 'dfs'; // Default to DFS algorithm
 let state = resetState();
+let slowVisualization = false; // Flag to control visualization speed
+const delayDuration = 1000; // Delay in milliseconds for slow visualization
 
 const p5Instance = new p5((sketch) => {
     sketch.setup = function () {
@@ -60,10 +62,16 @@ function executeAlgorithm() {
     // Update the shape count in the UI
     document.getElementById('shapeCount').textContent = state.shapeCount;
 
-    // If the algorithm is not yet completed, continue the animation loop
+    // Redraw the sketch to reflect changes
+    p5Instance.redraw();
+
+    // Determine the next step based on completion status and visualization speed
     if (!state.completed) {
-        p5Instance.redraw(); // Redraw the sketch
-        requestAnimationFrame(executeAlgorithm);
+        if (slowVisualization) {
+            setTimeout(executeAlgorithm, delayDuration); // Delay for slow visualization
+        } else {
+            requestAnimationFrame(executeAlgorithm); // Immediate for fast visualization
+        }
     } else {
         console.log('Algorithm completed');
     }
@@ -71,9 +79,14 @@ function executeAlgorithm() {
 
 function runAlgorithm() {
     state.shapeCount = 0;
+    state.completed = false; // Reset completion status
 
     // Start the algorithm execution
-    requestAnimationFrame(executeAlgorithm);
+    if (slowVisualization) {
+        setTimeout(executeAlgorithm, delayDuration); // Start with delay if slow visualization is on
+    } else {
+        requestAnimationFrame(executeAlgorithm); // Start immediately if fast visualization
+    }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -84,6 +97,13 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('algorithm').addEventListener('change', (event) => {
         algorithm = event.target.value;  // Update the selected algorithm
         console.log('Algorithm changed to:', algorithm);
+    });
+
+    // Event listener for the Slow Visualization toggle switch
+    const toggleSpeedSwitch = document.getElementById('toggleSpeed');
+    toggleSpeedSwitch.addEventListener('change', () => {
+        slowVisualization = toggleSpeedSwitch.checked; // Update the flag based on the switch state
+        console.log(`Slow Visualization mode is now ${slowVisualization ? 'On' : 'Off'}`);
     });
 });
 
