@@ -11,7 +11,6 @@ let grid = [];
 let algorithm = 'dfs';
 let state = resetState();
 
-// Create the p5 instance
 const p5Instance = new p5((sketch) => {
     sketch.setup = function () {
         const canvas = sketch.createCanvas(800, 600);
@@ -20,12 +19,11 @@ const p5Instance = new p5((sketch) => {
     };
 
     sketch.draw = function () {
-        console.log('Drawing grid...');
         sketch.clear();  // Clear the canvas before drawing
         sketch.background(255);  // Set the background to white
         drawGrid(sketch);
         if (!state.completed) {
-            runAlgorithm(sketch);
+            runAlgorithm();
         }
     };
 
@@ -48,58 +46,35 @@ const p5Instance = new p5((sketch) => {
         }
     }
 
-    function runAlgorithm(sketch) {
+    function runAlgorithm() {
+        state.shapeCount = 0;  // Reset shape count
+
+        // Run the selected algorithm
         switch (algorithm) {
             case 'dfs':
-                runDFS(grid, state, sketch);
+                runDFS(grid, state);
                 break;
             case 'bfs':
-                runBFS(grid, state, sketch);
+                runBFS(grid, state);
                 break;
             case 'union-find':
-                runUnionFind(grid, state, sketch);
+                runUnionFind(grid, state);
                 break;
             case 'flood-fill':
-                runFloodFill(grid, state, sketch);
+                runFloodFill(grid, state);
                 break;
         }
+
+        // Update the shape count in the UI
+        document.getElementById('shapeCount').textContent = state.shapeCount;
     }
 });
 
-// Function to reset the animation
-function resetAnimation() {
-    // Reset the grid and state
-    grid = [];
-    state = resetState();
-
-    // Clear the p5 canvas
-    p5Instance.clear();
-    p5Instance.noLoop(); // Stop the drawing loop
-    p5Instance.background(255); // Set the background to white
-}
-
-// Populate the data files dropdown on page load
 document.addEventListener('DOMContentLoaded', () => {
     const dataFilesSelect = document.getElementById('dataFiles');
     fetchDataFiles(dataFilesSelect);
 });
 
-// Handle file input change (for both file upload and dropdown selection)
-document.getElementById('fileInput').addEventListener('change', () => {
-    resetAnimation(); // Reset animation
-});
-
-document.getElementById('dataFiles').addEventListener('change', () => {
-    resetAnimation(); // Reset animation
-});
-
-// Handle algorithm selection change
-document.getElementById('algorithm').addEventListener('change', () => {
-    algorithm = document.getElementById('algorithm').value;
-    resetAnimation(); // Reset animation
-});
-
-// Run the visualization on button click
 document.getElementById('runButton').addEventListener('click', () => {
     const fileInput = document.getElementById('fileInput');
     const dataFilesSelect = document.getElementById('dataFiles');

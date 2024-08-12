@@ -25,15 +25,16 @@
     <label for="dataFiles">Or choose a file from the data directory:</label>
     <select id="dataFiles">
       <option value="">-- Select a file --</option>
-      <!-- Dynamically populated options will go here -->
     </select>
 
     <button id="runButton">Run Visualization</button>
   </div>
 
-  <div id="canvasContainer"></div>
+  <div id="results">
+    <p>Connected Shapes: <span id="shapeCount">0</span></p>
+  </div>
 
-  <!-- Remove the manual script tag -->
+  <div id="canvasContainer"></div>
 </body>
 
 </html>
