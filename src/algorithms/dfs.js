@@ -1,9 +1,10 @@
 /**
  * Depth-First Search
  * Create a stack of cells (array of objects) using row and column coordinates 
- * for all cells containing a 1
+ * for the first cell of a shape
  * Then loop through the stack checking each cell's neighboring cells for additional 1s
- * exploring one connected shape at a time
+ * pushing the cells neighboring those cells containing 1s into the queue
+ * until the entire shape has been found, then repeating the process for the next shape
  * 
  * @param {*} grid A 2D array of rows and columns
  * @param {*} state The current state of the application
