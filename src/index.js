@@ -33,7 +33,13 @@ const p5Instance = new p5((sketch) => {
 
         for (let r = 0; r < rows; r++) {
             for (let c = 0; c < cols; c++) {
-                sketch.fill(grid[r][c] === 1 ? 0 : 255);
+                if (grid[r][c] === 0) {
+                    sketch.fill(255); // White for empty cells
+                } else if (grid[r][c] === 1) {
+                    sketch.fill(0); // Black for shape cells
+                } else if (grid[r][c] === 2) {
+                    sketch.fill(200, 0, 0, 100); // Red for the current cell being processed
+                }
                 sketch.rect(c * cellWidth, r * cellHeight, cellWidth, cellHeight);
             }
         }

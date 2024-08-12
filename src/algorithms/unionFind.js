@@ -1,4 +1,4 @@
-const debugLogs = true;
+const debugLogs = false;
 
 /**
  * Union Find (also known as Disjoint-Set)
@@ -23,13 +23,13 @@ export function runUnionFind(grid, state) {
     // Get the next step from the front of the queue
     const step = state.unionFindSteps.shift();
 
-    // Update the grid to mark the cell as visited
-    grid[step.row][step.col] = 0;  // Mark the cell as visited
-
-    // Update the current cell being processed
+    // Highlight the current cell being processed
     state.currentCell = { row: step.row, col: step.col };
 
-    // Trigger the next iteration
+    // Simulate marking the cell as visited (for traversal visualization)
+    grid[step.row][step.col] = 2; // Use 2 to represent cells being processed (different color)
+
+    // Trigger the next iteration with a visual update
     requestAnimationFrame(() => runUnionFind(grid, state));
   } else {
     // If no more steps are left, mark the algorithm as completed
@@ -70,6 +70,9 @@ function initializeUnionFind(grid, state) {
 
         // Add the cell to the steps array to process it later
         state.unionFindSteps.push({ row: r, col: c });
+
+        // Mark the shape cells with a specific number for visualization
+        grid[r][c] = 1; // Use 1 to represent cells belonging to a shape (different color)
       }
     }
   }

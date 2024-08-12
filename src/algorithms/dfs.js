@@ -63,6 +63,9 @@ export function runDFS(grid, state) {
       // Mark the cell as visited by setting it to 0
       grid[row][col] = 0;
 
+      // Mark the current cell as visited by changing its value to 2 for visualization
+      grid[row][col] = 2;
+
       // Push neighboring cells onto the stack to continue the DFS
       if (row - 1 >= 0 && grid[row - 1][col] === 1) {
         state.stack.push({ row: row - 1, col }); // up
