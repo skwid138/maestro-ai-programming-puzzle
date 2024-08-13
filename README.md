@@ -98,6 +98,8 @@ It isn't functioning as I had hoped yet.
 
 I'll host a version of the app [here](https://codecurio.us/grid-traversal/)
 
+Install dependencies `npm install`
+
 Build the production bundle running `npm run build`
 
 For Development use `npm run start`
