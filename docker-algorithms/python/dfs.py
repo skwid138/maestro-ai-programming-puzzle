@@ -6,6 +6,11 @@ import sys
 # creating rows with the rows columns
 def read_grid(file_name):
     with open(file_name, 'r') as file:
+        # Create an array with each row as a string
+        # then strip the whitespace characters like '\n'
+        # next convert each row string into an array of that row's columns as strings
+        # use map and int to convert each cell value from a string to an integer
+        # finally create the 2D list
         grid = [list(map(int, list(line.strip()))) for line in file.readlines()]
     return grid
 
