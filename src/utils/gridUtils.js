@@ -1,3 +1,11 @@
+/**
+ * Create a 2D array from a string representation of a grid
+ * trim ensures no leading or trailing whitespace
+ * split('\n') splits the string into an array of rows
+ * map finally converts each row into an array of numbers for it's columns
+ * @param {string} text String representation of a grid
+ * @returns 
+ */
 export function initializeGrid(text) {
   return text.trim().split('\n').map(line => line.split('').map(Number));
 }

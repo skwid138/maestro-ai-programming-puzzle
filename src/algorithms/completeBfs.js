@@ -69,11 +69,19 @@ export function runBFS(grid, state) {
       // Mark the cell as visited
       grid[row][col] = 0;
 
-      // Enqueue neighboring cells
-      state.queue.push({ row: row - 1, col }); // up
-      state.queue.push({ row: row + 1, col }); // down
-      state.queue.push({ row, col: col - 1 }); // left
-      state.queue.push({ row, col: col + 1 }); // right
+      // Enqueue neighboring cells to continue the BFS
+      if (row - 1 >= 0 && grid[row - 1][col] === 1) {
+        state.queue.push({ row: row - 1, col }); // up
+      }
+      if (row + 1 < grid.length && grid[row + 1][col] === 1) {
+        state.queue.push({ row: row + 1, col }); // down
+      }
+      if (col - 1 >= 0 && grid[row][col - 1] === 1) {
+        state.queue.push({ row, col: col - 1 }); // left
+      }
+      if (col + 1 < grid[0].length && grid[row][col + 1] === 1) {
+        state.queue.push({ row, col: col + 1 }); // right
+      }
     }
   }
 
