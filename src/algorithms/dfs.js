@@ -71,10 +71,19 @@ export function runDFS(grid, state) {
       grid[row][col] = 0;
 
       // Push neighboring cells onto the stack to continue the DFS
-      state.stack.push({ row: row - 1, col }); // up
-      state.stack.push({ row: row + 1, col }); // down
-      state.stack.push({ row, col: col - 1 }); // left
-      state.stack.push({ row, col: col + 1 }); // right
+      // Push neighboring cells onto the stack to continue the DFS
+      if (row - 1 >= 0 && grid[row - 1][col] === 1) {
+        state.stack.push({ row: row - 1, col }); // up
+      }
+      if (row + 1 < grid.length && grid[row + 1][col] === 1) {
+        state.stack.push({ row: row + 1, col }); // down
+      }
+      if (col - 1 >= 0 && grid[row][col - 1] === 1) {
+        state.stack.push({ row, col: col - 1 }); // left
+      }
+      if (col + 1 < grid[0].length && grid[row][col + 1] === 1) {
+        state.stack.push({ row, col: col + 1 }); // right
+      }
     }
   }
 
