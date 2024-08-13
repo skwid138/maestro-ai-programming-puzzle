@@ -44,18 +44,22 @@ function initializeUnionFind(grid, state) {
   const cols = grid[0].length;
 
   // Initialize the parent array where each element is initially its own parent
+  // The array will contain a value for each cell in the grid intially set to -1
   state.parent = Array(rows * cols).fill(-1);
 
   // Initialize the rank array for union by rank optimization
+  // The array will contain a value for each cell in the grid intially set to 0
   state.rank = Array(rows * cols).fill(0);
 
   // Array to keep track of steps for processing
   state.unionFindSteps = [];
 
-  // Iterate through each cell in the grid
+  // Iterate through each row in the grid
   for (let r = 0; r < rows; r++) {
+    // Iterate through each column in the grid
     for (let c = 0; c < cols; c++) {
-      if (grid[r][c] === 1) { // If the cell is part of a shape
+      // If the cell is part of a shape
+      if (grid[r][c] === 1) {
         // Union the cell with its adjacent cells
         unionAdjacentCells(r, c, grid, state);
 
@@ -94,26 +98,34 @@ function unionAdjacentCells(r, c, grid, state) {
   const rows = grid.length;
   const cols = grid[0].length;
 
-  // Helper function to calculate the linear index of a cell in the grid
+  // Calculate the linear index of a cell in the grid
   const index = (r, c) => r * cols + c;
 
   // Check and union with the cell above
-  if (r > 0 && grid[r - 1][c] === 1) union(index(r, c), index(r - 1, c), state);
+  if (r > 0 && grid[r - 1][c] === 1) {
+    union(index(r, c), index(r - 1, c), state);
+  }
 
   // Check and union with the cell to the left
-  if (c > 0 && grid[r][c - 1] === 1) union(index(r, c), index(r, c - 1), state);
+  if (c > 0 && grid[r][c - 1] === 1) {
+    union(index(r, c), index(r, c - 1), state);
+  }
 
   // Check and union with the cell below
-  if (r < rows - 1 && grid[r + 1][c] === 1) union(index(r, c), index(r + 1, c), state);
+  if (r < rows - 1 && grid[r + 1][c] === 1) {
+    union(index(r, c), index(r + 1, c), state);
+  }
 
   // Check and union with the cell to the right
-  if (c < cols - 1 && grid[r][c + 1] === 1) union(index(r, c), index(r, c + 1), state);
+  if (c < cols - 1 && grid[r][c + 1] === 1) {
+    union(index(r, c), index(r, c + 1), state);
+  }
 }
 
 /**
  * Find the root of the set containing the element i
  * 
- * This function implements path compression, which flattens the structure of the tree, 
+ * This implements path compression, which flattens the structure of the tree, 
  * making future queries faster by pointing all nodes directly to the root.
  * 
  * @param {number} i The index of the element in the parent array
@@ -122,8 +134,10 @@ function unionAdjacentCells(r, c, grid, state) {
  */
 function find(i, state) {
   debugLogs && console.log('in find');
-  // If the element is its own parent, return it as the root
-  if (state.parent[i] === -1) return i;
+  // If the element is its own parent, return element as the root
+  if (state.parent[i] === -1) {
+    return i;
+  }
 
   // Recursively find the root and apply path compression
   state.parent[i] = find(state.parent[i], state);
