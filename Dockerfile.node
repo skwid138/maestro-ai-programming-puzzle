@@ -2,7 +2,7 @@ FROM node:lts
 
 WORKDIR /app
 
-COPY docker-algorithms/ .
+COPY docker-algorithms/node/ .
 COPY data/ .
 
 # By default, run the DFS script
