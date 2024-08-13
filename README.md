@@ -2,7 +2,7 @@
 
 Each script utilizes a different algorithm to solve the problem. This allows for testing the results against each other as well as checking the performance of each.
 
-## Usage
+## Docker Usage
 
 - First build the desired image 
   - node: `docker build -f Dockerfile.node -t maestro-shapes-node .`
@@ -29,7 +29,7 @@ Memory used (DFS): 2.109375 KB
 
 ```
 Number of connected shapes (DFS): 13
-Execution time (DFS): 0.000379s
+Execution time (DFS): 0.420570s
 Memory used (DFS): 0.0000 KB
 ```
 
@@ -37,7 +37,7 @@ Memory used (DFS): 0.0000 KB
 
  ```
 Number of connected shapes (DFS): 663
-Execution time (DFS): 0.005555s
+Execution time (DFS): 5.587816s
 Memory used (DFS): 0.0000 KB
  ```
 
@@ -62,7 +62,7 @@ Memory used (BFS): 542.9765625 KB
 
 ```
 Number of connected shapes (BFS): 13
-Execution time (BFS): 0.000378s
+Execution time (BFS): 0.373125s
 Memory used (BFS): 0.0000 KB
 ```
 
@@ -70,7 +70,7 @@ Memory used (BFS): 0.0000 KB
 
  ```
 Number of connected shapes (BFS): 663
-Execution time (BFS): 0.007544s
+Execution time (BFS): 5.525112s
 Memory used (BFS): 0.0000 KB
  ```
 
@@ -90,3 +90,16 @@ Number of connected shapes (Union-Find): 663
 Execution time (Union-Find): 0s 4.008323ms
 Memory used (Union-Find): 203.921875 KB
 ```
+
+## Client Animation Usage
+
+This was an attempt to make a visualization of how each algorithm traverses the grid.
+It isn't functioning as I had hoped yet.
+
+I'll host a version of the app [here](https://codecurio.us/grid-traversal/)
+
+Build the production bundle running `npm run build`
+
+For Development use `npm run start`
+
+
