@@ -53,16 +53,16 @@ def count_connected_shapes_bfs(grid):
 def measure_performance(grid, func):
     # Measure the memory before running the algorithm
     process = psutil.Process()
-    mem_before = process.memory_info().rss / 1024  # in KB
+    mem_before = process.memory_info().rss / 1024 # in KB
 
     start_time = time.time()
     shape_count = func(grid)
     end_time = time.time()
 
     # Measure the memory after running the algorithm
-    mem_after = process.memory_info().rss / 1024  # in KB
+    mem_after = process.memory_info().rss / 1024 # in KB
 
-    exec_time = end_time - start_time
+    exec_time = (end_time - start_time) * 1000 # in milliseconds
     mem_used = mem_after - mem_before
 
     return shape_count, exec_time, mem_used
